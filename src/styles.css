@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-campus-50: #edf7f1;
+  --color-campus-100: #d8ecdf;
+  --color-campus-200: #b3d9c2;
+  --color-campus-500: #287456;
+  --color-campus-600: #176b4b;
+  --color-campus-700: #10533a;
+  --color-campus-900: #13251e;
+
+  --z-index-modal: 100;
+  --z-index-alert: 130;
+  --z-index-toast: 150;
+}
+
+html {
+  min-width: 1120px;
+}
+
+body {
+  @apply m-0 min-h-screen bg-slate-100 font-sans text-slate-800 antialiased;
+}
+
+button {
+  @apply cursor-pointer;
+}
+
+button:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+body.modal-open {
+  @apply overflow-hidden;
+}
