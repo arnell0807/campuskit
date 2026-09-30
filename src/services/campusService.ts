@@ -2,6 +2,12 @@ import { supabase } from "./supabaseClient";
 import type { Equipment, Student, Checkout } from "../types";
 import { NEEDS_REPAIR } from "../constants";
 import { getToday } from "../utils/format";
+import { offlineStatus } from "./offlineStatus";
+import {
+  getDemoCheckouts,
+  getDemoEquipment,
+  getDemoStudents,
+} from "./demoData";
 
 type EquipmentPayload = Omit<Equipment, "id"> & {
   id?: string;
@@ -108,29 +114,65 @@ function sameText(a: string, b: string) {
   return a.toLowerCase() === b.toLowerCase();
 }
 
+// A paused Supabase project can hang instead of failing, so give up after 8s.
+const READ_TIMEOUT_MS = 8000;
+
+const OFFLINE_MESSAGE =
+  "The demo database is offline, so changes are paused. Please try again later.";
+
+// Reads never fail: if Supabase is missing, errors, or times out, serve the
+// bundled demo data and flag the app as offline until a read succeeds again.
+async function readTable<Row, Item>(
+  table: string,
+  toItem: (row: Row) => Item,
+  getFallback: () => Item[],
+): Promise<Item[]> {
+  if (!supabase) {
+    offlineStatus.set(true);
+    return getFallback();
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from(table)
+      .select("*")
+      .abortSignal(AbortSignal.timeout(READ_TIMEOUT_MS));
+
+    assertNoError(error);
+    offlineStatus.set(false);
+    return ((data ?? []) as Row[]).map(toItem);
+  } catch {
+    offlineStatus.set(true);
+    return getFallback();
+  }
+}
+
+function getWriteClient() {
+  if (!supabase || offlineStatus.get()) {
+    throw new Error(OFFLINE_MESSAGE);
+  }
+  return supabase;
+}
+
 export const campusService = {
-  async getEquipment(): Promise<Equipment[]> {
-    const { data, error } = await supabase.from("equipment").select("*");
-    assertNoError(error);
-    return (data ?? []).map(toEquipment);
+  getEquipment(): Promise<Equipment[]> {
+    return readTable("equipment", toEquipment, getDemoEquipment);
   },
 
-  async getStudents(): Promise<Student[]> {
-    const { data, error } = await supabase.from("students").select("*");
-    assertNoError(error);
-    return (data ?? []).map(toStudent);
+  getStudents(): Promise<Student[]> {
+    return readTable("students", toStudent, getDemoStudents);
   },
 
-  async getCheckouts(): Promise<Checkout[]> {
-    const { data, error } = await supabase.from("checkouts").select("*");
-    assertNoError(error);
-    return (data ?? []).map(toCheckout);
+  getCheckouts(): Promise<Checkout[]> {
+    return readTable("checkouts", toCheckout, getDemoCheckouts);
   },
 
   async saveEquipment(item: EquipmentPayload) {
+    const db = getWriteClient();
+
     const serialNumber = item.serialNumber.trim();
 
-    const { data: matches, error: matchError } = await supabase
+    const { data: matches, error: matchError } = await db
       .from("equipment")
       .select("id, serial_number")
       .ilike("serial_number", serialNumber);
@@ -146,7 +188,7 @@ export const campusService = {
     }
 
     if (item.id) {
-      const { data: current, error: currentError } = await supabase
+      const { data: current, error: currentError } = await db
         .from("equipment")
         .select("id")
         .eq("id", item.id)
@@ -158,7 +200,7 @@ export const campusService = {
         throw new Error("Equipment item not found.");
       }
 
-      const { data: activeCheckouts, error: activeError } = await supabase
+      const { data: activeCheckouts, error: activeError } = await db
         .from("checkouts")
         .select("id")
         .eq("equipment_id", item.id)
@@ -172,7 +214,7 @@ export const campusService = {
         throw new Error("Return this item before changing its status.");
       }
 
-      const { error: updateError } = await supabase
+      const { error: updateError } = await db
         .from("equipment")
         .update(toEquipmentRow({ ...item, id: item.id }))
         .eq("id", item.id);
@@ -181,7 +223,7 @@ export const campusService = {
     } else {
       const id = makeId("eq");
 
-      const { error: insertError } = await supabase
+      const { error: insertError } = await db
         .from("equipment")
         .insert(
           toEquipmentRow({ ...item, id, status: item.status || "available" }),
@@ -194,7 +236,9 @@ export const campusService = {
   },
 
   async deleteEquipment(id: string) {
-    const { data: activeCheckouts, error: activeError } = await supabase
+    const db = getWriteClient();
+
+    const { data: activeCheckouts, error: activeError } = await db
       .from("checkouts")
       .select("id")
       .eq("equipment_id", id)
@@ -206,17 +250,19 @@ export const campusService = {
       throw new Error("Checked-out equipment cannot be deleted.");
     }
 
-    const { error } = await supabase.from("equipment").delete().eq("id", id);
+    const { error } = await db.from("equipment").delete().eq("id", id);
     assertNoError(error);
 
     return id;
   },
 
   async saveStudent(student: StudentPayload) {
+    const db = getWriteClient();
+
     const studentId = student.studentId.trim();
     const email = student.email.trim();
 
-    const { data: idMatches, error: idError } = await supabase
+    const { data: idMatches, error: idError } = await db
       .from("students")
       .select("id, student_number")
       .ilike("student_number", studentId);
@@ -232,7 +278,7 @@ export const campusService = {
       throw new Error("That student ID is already registered.");
     }
 
-    const { data: emailMatches, error: emailError } = await supabase
+    const { data: emailMatches, error: emailError } = await db
       .from("students")
       .select("id, email")
       .ilike("email", email);
@@ -248,7 +294,7 @@ export const campusService = {
     }
 
     if (student.id) {
-      const { error: updateError } = await supabase
+      const { error: updateError } = await db
         .from("students")
         .update(toStudentRow({ ...student, id: student.id }))
         .eq("id", student.id);
@@ -257,7 +303,7 @@ export const campusService = {
     } else {
       const id = makeId("stu");
 
-      const { error: insertError } = await supabase
+      const { error: insertError } = await db
         .from("students")
         .insert(toStudentRow({ ...student, id }));
 
@@ -268,7 +314,9 @@ export const campusService = {
   },
 
   async deleteStudent(id: string) {
-    const { data: activeCheckouts, error: activeError } = await supabase
+    const db = getWriteClient();
+
+    const { data: activeCheckouts, error: activeError } = await db
       .from("checkouts")
       .select("id")
       .eq("student_id", id)
@@ -280,14 +328,16 @@ export const campusService = {
       throw new Error("Students with active checkouts cannot be deleted.");
     }
 
-    const { error } = await supabase.from("students").delete().eq("id", id);
+    const { error } = await db.from("students").delete().eq("id", id);
     assertNoError(error);
 
     return id;
   },
 
   async createCheckout(payload: CheckoutPayload) {
-    const { data: equipmentRow, error: equipmentError } = await supabase
+    const db = getWriteClient();
+
+    const { data: equipmentRow, error: equipmentError } = await db
       .from("equipment")
       .select("*")
       .eq("id", payload.equipmentId)
@@ -295,7 +345,7 @@ export const campusService = {
 
     assertNoError(equipmentError);
 
-    const { data: studentRow, error: studentError } = await supabase
+    const { data: studentRow, error: studentError } = await db
       .from("students")
       .select("id")
       .eq("id", payload.studentId)
@@ -324,13 +374,13 @@ export const campusService = {
       returned_date: null,
     };
 
-    const { error: insertError } = await supabase
+    const { error: insertError } = await db
       .from("checkouts")
       .insert(checkoutRow);
 
     assertNoError(insertError);
 
-    const { error: updateError } = await supabase
+    const { error: updateError } = await db
       .from("equipment")
       .update({ status: "checked-out" })
       .eq("id", payload.equipmentId);
@@ -341,7 +391,9 @@ export const campusService = {
   },
 
   async returnEquipment({ checkoutId, condition }: ReturnEquipmentPayload) {
-    const { data: checkout, error: checkoutError } = await supabase
+    const db = getWriteClient();
+
+    const { data: checkout, error: checkoutError } = await db
       .from("checkouts")
       .select("*")
       .eq("id", checkoutId)
@@ -355,14 +407,14 @@ export const campusService = {
 
     const returnedDate = getToday();
 
-    const { error: updateCheckoutError } = await supabase
+    const { error: updateCheckoutError } = await db
       .from("checkouts")
       .update({ returned_date: returnedDate })
       .eq("id", checkoutId);
 
     assertNoError(updateCheckoutError);
 
-    const { error: updateEquipmentError } = await supabase
+    const { error: updateEquipmentError } = await db
       .from("equipment")
       .update({
         condition,

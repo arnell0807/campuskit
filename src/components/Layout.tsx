@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   Boxes,
   ClipboardList,
+  CloudOff,
   GraduationCap,
   LayoutDashboard,
   Users,
@@ -10,6 +11,7 @@ import {
 } from "lucide-react";
 import { clearToast } from "../features/ui/uiSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useOfflineStatus } from "../hooks/useOfflineStatus";
 
 const navItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -29,6 +31,7 @@ export default function Layout() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { toast } = useAppSelector((state) => state.ui);
+  const offline = useOfflineStatus();
 
   const [title, description] = pageTitles[location.pathname] ?? pageTitles["/"];
 
@@ -84,6 +87,18 @@ export default function Layout() {
             <p className="m-0 text-sm text-slate-500">{description}</p>
           </div>
         </header>
+        {offline && (
+          <div
+            className="flex items-center gap-2 border-b border-amber-200 bg-amber-50 px-9 py-2.5 text-xs font-semibold text-amber-800"
+            role="status"
+          >
+            <CloudOff size={15} />
+            <span>
+              The demo database is offline, so you&apos;re seeing sample data.
+              Some actions are paused.
+            </span>
+          </div>
+        )}
         <div className="mx-auto max-w-370 px-9 py-8">
           <Outlet />
         </div>
