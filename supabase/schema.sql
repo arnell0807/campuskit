@@ -38,3 +38,16 @@ alter table checkouts enable row level security;
 create policy "public read/write" on equipment for all using (true) with check (true);
 create policy "public read/write" on students for all using (true) with check (true);
 create policy "public read/write" on checkouts for all using (true) with check (true);
+
+-- Written to twice a week by .github/workflows/keep-supabase-alive.yml.
+-- Read-only pings didn't stop the free plan from pausing the project, so the
+-- workflow inserts a row to create real database activity. Anon may only
+-- insert here; there is no select/update/delete policy.
+create table if not exists keep_alive (
+  id bigint generated always as identity primary key,
+  pinged_at timestamptz not null default now()
+);
+
+alter table keep_alive enable row level security;
+
+create policy "anon insert pings" on keep_alive for insert to anon with check (true);
