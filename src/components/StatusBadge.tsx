@@ -51,7 +51,7 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
 
   return (
     <span
-      className={`inline-flex min-h-6 items-center gap-1 whitespace-nowrap rounded-full px-2 text-xs font-extrabold ${item.color}`}
+      className={`inline-flex min-h-6 items-center gap-1 whitespace-nowrap rounded-sm px-2 text-xs font-extrabold ${item.color}`}
     >
       <Icon size={13} />
       {item.label}

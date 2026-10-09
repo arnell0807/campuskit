@@ -45,7 +45,7 @@ export default function Layout() {
     <div className="min-h-screen">
       <aside className="fixed inset-y-0 left-0 z-20 flex w-64 flex-col bg-campus-900 px-5 py-7 text-slate-200 shadow-xl">
         <div className="flex items-center gap-3 border-b border-white/10 px-2 pb-7">
-          <div className="grid size-10 place-items-center rounded-xl bg-campus-200 text-campus-900">
+          <div className="grid size-10 place-items-center rounded bg-campus-200 text-campus-900">
             <GraduationCap size={22} />
           </div>
           <div>
@@ -68,7 +68,7 @@ export default function Layout() {
               to={path}
               end={path === "/"}
               className={({ isActive }) =>
-                `mb-1 flex h-11 w-full items-center gap-3 rounded-lg px-3 text-sm font-semibold no-underline transition-colors ${isActive ? "bg-campus-600 text-white shadow-sm ring-1 ring-inset ring-campus-200/20" : "text-slate-400 hover:bg-white/5 hover:text-white"}`
+                `mb-1 flex h-11 w-full items-center gap-3 rounded-sm px-3 text-sm font-semibold no-underline transition-colors ${isActive ? "bg-campus-600 text-white shadow-sm ring-1 ring-inset ring-campus-200/20" : "text-slate-400 hover:bg-white/5 hover:text-white"}`
               }
             >
               <Icon size={19} strokeWidth={2} />
@@ -106,7 +106,7 @@ export default function Layout() {
 
       {toast && (
         <div
-          className="fixed bottom-6 right-6 z-toast flex min-w-64 max-w-sm items-center justify-between gap-4 rounded-lg border border-white/15 bg-campus-700 px-4 py-3 text-xs text-white shadow-xl"
+          className="fixed bottom-6 right-6 z-toast flex min-w-64 max-w-sm items-center justify-between gap-4 rounded-sm border border-white/15 bg-campus-700 px-4 py-3 text-xs text-white shadow-xl"
           role="status"
         >
           <span>{toast.message}</span>

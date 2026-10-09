@@ -105,7 +105,7 @@ export default function Students() {
   return (
     <div>
       <div className="mb-4 grid grid-cols-[minmax(260px,1fr)_auto] gap-3">
-        <div className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 focus-within:border-campus-500 focus-within:ring-2 focus-within:ring-campus-100">
+        <div className="flex h-10 items-center gap-2 rounded-sm border border-slate-300 bg-white px-3 focus-within:border-campus-500 focus-within:ring-2 focus-within:ring-campus-100">
           <Search className="text-slate-400" size={18} />
 
           <input
@@ -118,7 +118,7 @@ export default function Students() {
         </div>
 
         <button
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-sm border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
           onClick={() => {
             saveMutation.reset();
             setEditingStudent(null);
@@ -130,7 +130,7 @@ export default function Students() {
         </button>
       </div>
 
-      <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <section className="overflow-hidden rounded border border-slate-200 bg-white shadow-sm">
         <div className="flex min-h-16 items-center gap-2 border-b border-slate-200 px-5">
           <strong className="text-sm font-extrabold">
             {pluralize(filtered.length, "student")}
@@ -210,7 +210,7 @@ export default function Students() {
                       <td className="border-b border-slate-100 px-5 py-4">
                         <div className="flex justify-end gap-1">
                           <a
-                            className="inline-grid size-8 place-items-center rounded-lg text-slate-500 no-underline hover:bg-slate-100"
+                            className="inline-grid size-8 place-items-center rounded-sm text-slate-500 no-underline hover:bg-slate-100"
                             href={`mailto:${student.email}`}
                             aria-label={`Email ${student.name}`}
                           >
@@ -218,7 +218,7 @@ export default function Students() {
                           </a>
 
                           <button
-                            className="inline-grid size-8 place-items-center rounded-lg border-0 bg-transparent text-slate-500 hover:bg-slate-100"
+                            className="inline-grid size-8 place-items-center rounded-sm border-0 bg-transparent text-slate-500 hover:bg-slate-100"
                             onClick={() => {
                               saveMutation.reset();
                               setEditingStudent(student);
@@ -230,7 +230,7 @@ export default function Students() {
                           </button>
 
                           <button
-                            className="inline-grid size-8 place-items-center rounded-lg border-0 bg-transparent text-slate-500 hover:bg-red-50 hover:text-red-700"
+                            className="inline-grid size-8 place-items-center rounded-sm border-0 bg-transparent text-slate-500 hover:bg-red-50 hover:text-red-700"
                             onClick={() => {
                               deleteMutation.reset();
                               setDeleting(student);
@@ -253,7 +253,7 @@ export default function Students() {
             message="Try a different name, ID, email, or department."
             action={
               <button
-                className="inline-flex min-h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
+                className="inline-flex min-h-10 items-center justify-center rounded-sm border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
                 onClick={() => dispatch(setStudentSearch(""))}
               >
                 Clear search
@@ -297,7 +297,7 @@ export default function Students() {
 
       {deleteMutation.error && deleting && (
         <div
-          className="fixed bottom-8 left-1/2 z-alert -translate-x-1/2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700 shadow-lg"
+          className="fixed bottom-8 left-1/2 z-alert -translate-x-1/2 rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700 shadow-lg"
           role="alert"
         >
           {deleteMutation.error.message}

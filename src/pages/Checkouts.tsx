@@ -140,9 +140,9 @@ export default function Checkouts() {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between gap-4">
-        <div className="inline-flex rounded-lg bg-slate-200 p-1" role="tablist">
+        <div className="inline-flex rounded-sm bg-slate-200 p-1" role="tablist">
           <button
-            className={`inline-flex min-h-8 items-center gap-2 rounded-md border-0 px-3 text-xs font-bold ${
+            className={`inline-flex min-h-8 items-center gap-2 rounded-sm border-0 px-3 text-xs font-bold ${
               view === "active"
                 ? "bg-white text-slate-900 shadow-sm"
                 : "bg-transparent text-slate-600"
@@ -157,7 +157,7 @@ export default function Checkouts() {
           </button>
 
           <button
-            className={`inline-flex min-h-8 items-center gap-2 rounded-md border-0 px-3 text-xs font-bold ${
+            className={`inline-flex min-h-8 items-center gap-2 rounded-sm border-0 px-3 text-xs font-bold ${
               view === "history"
                 ? "bg-white text-slate-900 shadow-sm"
                 : "bg-transparent text-slate-600"
@@ -173,7 +173,7 @@ export default function Checkouts() {
         </div>
 
         <button
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-sm border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
           onClick={() => {
             checkoutMutation.reset();
             setSearchParams({ new: "1" });
@@ -185,7 +185,7 @@ export default function Checkouts() {
         </button>
       </div>
 
-      <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <section className="overflow-hidden rounded border border-slate-200 bg-white shadow-sm">
         <header className="flex min-h-16 items-center justify-between border-b border-slate-200 px-5">
           <div>
             <h3 className="mb-1 text-sm font-extrabold text-slate-900">
@@ -233,7 +233,7 @@ export default function Checkouts() {
                   }`}
                   key={checkout.id}
                 >
-                  <div className="grid size-9 place-items-center rounded-lg bg-campus-100 text-campus-700">
+                  <div className="grid size-9 place-items-center rounded-sm bg-campus-100 text-campus-700">
                     {view === "active" ? (
                       <ArrowRight size={19} />
                     ) : (
@@ -300,7 +300,7 @@ export default function Checkouts() {
 
                   {view === "active" && (
                     <button
-                      className="inline-flex min-h-9 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 text-xs font-bold text-slate-700 hover:bg-slate-50"
+                      className="inline-flex min-h-9 items-center justify-center gap-2 rounded-sm border border-slate-300 bg-white px-3 text-xs font-bold text-slate-700 hover:bg-slate-50"
                       onClick={() => {
                         returnMutation.reset();
                         setReturningCheckout(checkout);
