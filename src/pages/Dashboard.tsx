@@ -80,7 +80,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <section className="relative mb-6 flex items-center justify-between gap-6 overflow-hidden rounded-2xl bg-linear-to-r from-campus-900 via-campus-700 to-campus-500 px-7 py-6 text-white shadow-lg">
+      <section className="relative mb-6 flex items-center justify-between gap-6 overflow-hidden rounded-md bg-linear-to-r from-campus-900 via-campus-700 to-campus-500 px-7 py-6 text-white shadow-lg">
         <div>
           <span className="mb-2 block text-xs font-extrabold uppercase tracking-widest text-campus-200">
             {weekday} overview
@@ -98,7 +98,7 @@ export default function Dashboard() {
         </div>
 
         <button
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-campus-200 bg-campus-200 px-4 text-xs font-bold text-campus-900 hover:bg-white"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-sm border border-campus-200 bg-campus-200 px-4 text-xs font-bold text-campus-900 hover:bg-white"
           onClick={() => navigate("/checkouts?new=1")}
         >
           <Plus size={17} />
@@ -110,8 +110,8 @@ export default function Dashboard() {
         className="mb-5 grid grid-cols-4 gap-4"
         aria-label="Equipment overview"
       >
-        <article className="flex min-h-32 items-start gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-campus-100 text-campus-700">
+        <article className="flex min-h-32 items-start gap-4 rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="grid size-10 shrink-0 place-items-center rounded bg-campus-100 text-campus-700">
             <Boxes size={20} />
           </div>
 
@@ -130,8 +130,8 @@ export default function Dashboard() {
           </div>
         </article>
 
-        <article className="flex min-h-32 items-start gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-campus-100 text-campus-700">
+        <article className="flex min-h-32 items-start gap-4 rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="grid size-10 shrink-0 place-items-center rounded bg-campus-100 text-campus-700">
             <CheckCircle2 size={20} />
           </div>
 
@@ -153,8 +153,8 @@ export default function Dashboard() {
           </div>
         </article>
 
-        <article className="flex min-h-32 items-start gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-100 text-amber-700">
+        <article className="flex min-h-32 items-start gap-4 rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="grid size-10 shrink-0 place-items-center rounded bg-amber-100 text-amber-700">
             <Clock3 size={20} />
           </div>
 
@@ -173,8 +173,8 @@ export default function Dashboard() {
           </div>
         </article>
 
-        <article className="flex min-h-32 items-start gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-red-100 text-red-700">
+        <article className="flex min-h-32 items-start gap-4 rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="grid size-10 shrink-0 place-items-center rounded bg-red-100 text-red-700">
             <Wrench size={20} />
           </div>
 
@@ -195,7 +195,7 @@ export default function Dashboard() {
       </section>
 
       <div className="grid grid-cols-[minmax(0,1.7fr)_minmax(280px,.8fr)] gap-5">
-        <section className="rounded-xl border border-slate-200 bg-white shadow-sm">
+        <section className="rounded border border-slate-200 bg-white shadow-sm">
           <header className="flex min-h-20 items-center justify-between gap-4 border-b border-slate-200 px-5 py-4">
             <div>
               <h3 className="mb-1 text-sm font-extrabold text-slate-900">
@@ -234,7 +234,7 @@ export default function Dashboard() {
                   key={checkout.id}
                 >
                   <div
-                    className={`grid size-8 shrink-0 place-items-center rounded-lg ${
+                    className={`grid size-8 shrink-0 place-items-center rounded-sm ${
                       returned
                         ? "bg-slate-100 text-slate-600"
                         : "bg-campus-100 text-campus-700"
@@ -283,7 +283,7 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white shadow-sm">
+        <section className="rounded border border-slate-200 bg-white shadow-sm">
           <header className="flex min-h-20 items-center justify-between gap-4 border-b border-slate-200 px-5 py-4">
             <div>
               <h3 className="mb-1 text-sm font-extrabold text-slate-900">
@@ -349,7 +349,7 @@ export default function Dashboard() {
 
           {overdue.length > 0 && (
             <button
-              className="mx-4 mb-4 inline-flex min-h-10 w-[calc(100%-2rem)] items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
+              className="mx-4 mb-4 inline-flex min-h-10 w-[calc(100%-2rem)] items-center justify-center rounded-sm border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
               onClick={openOverdue}
             >
               Review overdue items

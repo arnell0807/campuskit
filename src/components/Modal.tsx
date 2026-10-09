@@ -37,7 +37,7 @@ export default function Modal({
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <section
-        className={`max-h-[calc(100vh-40px)] w-full overflow-auto rounded-2xl border border-white/50 bg-white shadow-2xl ${
+        className={`max-h-[calc(100vh-40px)] w-full overflow-auto rounded-md border border-white/50 bg-white shadow-2xl ${
           size === "small" ? "max-w-md" : "max-w-2xl"
         }`}
         role="dialog"
@@ -59,7 +59,7 @@ export default function Modal({
 
           <button
             type="button"
-            className="inline-grid size-9 place-items-center rounded-lg border-0 bg-transparent p-0 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+            className="inline-grid size-9 place-items-center rounded-sm border-0 bg-transparent p-0 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
             onClick={onClose}
             aria-label="Close dialog"
           >

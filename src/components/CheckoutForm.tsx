@@ -56,7 +56,7 @@ export default function CheckoutForm({
           className="col-span-2"
         >
           <select
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             {...register("equipmentId", {
               required: "Choose an equipment item.",
             })}
@@ -78,7 +78,7 @@ export default function CheckoutForm({
           className="col-span-2"
         >
           <select
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             {...register("studentId", {
               required: "Choose a student.",
             })}
@@ -95,7 +95,7 @@ export default function CheckoutForm({
 
         <FormField label="Checkout date" error={errors.checkoutDate?.message}>
           <input
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             type="date"
             max={today}
             {...register("checkoutDate", {
@@ -106,7 +106,7 @@ export default function CheckoutForm({
 
         <FormField label="Due date" error={errors.dueDate?.message}>
           <input
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             type="date"
             min={checkoutDate || today}
             {...register("dueDate", {
@@ -120,7 +120,7 @@ export default function CheckoutForm({
       </div>
 
       {serverError && (
-        <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+        <div className="mt-4 rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
           {serverError}
         </div>
       )}
@@ -128,14 +128,14 @@ export default function CheckoutForm({
       <div className="mt-6 flex justify-end gap-2 border-t border-slate-200 pt-4">
         <button
           type="button"
-          className="inline-flex min-h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
+          className="inline-flex min-h-10 items-center justify-center rounded-sm border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
           onClick={onCancel}
         >
           Cancel
         </button>
 
         <button
-          className="inline-flex min-h-10 items-center justify-center rounded-lg border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
+          className="inline-flex min-h-10 items-center justify-center rounded-sm border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
           disabled={pending}
         >
           {pending ? "Checking out..." : "Confirm checkout"}

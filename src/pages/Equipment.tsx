@@ -169,7 +169,7 @@ export default function Equipment() {
   return (
     <div>
       <div className="mb-4 grid grid-cols-[minmax(240px,1fr)_170px_150px_auto] gap-3">
-        <div className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 focus-within:border-campus-500 focus-within:ring-2 focus-within:ring-campus-100">
+        <div className="flex h-10 items-center gap-2 rounded-sm border border-slate-300 bg-white px-3 focus-within:border-campus-500 focus-within:ring-2 focus-within:ring-campus-100">
           <Search className="text-slate-400" size={18} />
 
           <input
@@ -189,7 +189,7 @@ export default function Equipment() {
         </div>
 
         <select
-          className="min-h-10 rounded-lg border border-slate-300 bg-white px-3 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+          className="min-h-10 rounded-sm border border-slate-300 bg-white px-3 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
           value={filters.category}
           onChange={(event) =>
             dispatch(
@@ -211,7 +211,7 @@ export default function Equipment() {
         </select>
 
         <select
-          className="min-h-10 rounded-lg border border-slate-300 bg-white px-3 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+          className="min-h-10 rounded-sm border border-slate-300 bg-white px-3 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
           value={filters.status}
           onChange={(event) =>
             dispatch(
@@ -230,7 +230,7 @@ export default function Equipment() {
         </select>
 
         <button
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-sm border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
           onClick={() => {
             saveMutation.reset();
             setEditingEquipment(null);
@@ -267,7 +267,7 @@ export default function Equipment() {
 
             return (
               <article
-                className="min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                className="min-w-0 overflow-hidden rounded border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                 key={item.id}
               >
                 <div
@@ -287,7 +287,7 @@ export default function Equipment() {
                     data-equipment-menu
                   >
                     <button
-                      className="inline-grid size-9 place-items-center rounded-lg border-0 bg-white/70 p-0 text-slate-600 hover:bg-white"
+                      className="inline-grid size-9 place-items-center rounded-sm border-0 bg-white/70 p-0 text-slate-600 hover:bg-white"
                       onClick={() =>
                         setOpenMenu(openMenu === item.id ? null : item.id)
                       }
@@ -297,9 +297,9 @@ export default function Equipment() {
                     </button>
 
                     {openMenu === item.id && (
-                      <div className="absolute right-0 top-10 w-32 rounded-lg border border-slate-200 bg-white p-1 shadow-xl">
+                      <div className="absolute right-0 top-10 w-32 rounded-sm border border-slate-200 bg-white p-1 shadow-xl">
                         <button
-                          className="flex w-full items-center gap-2 rounded-md border-0 bg-transparent p-2 text-left text-xs font-semibold text-slate-800 hover:bg-slate-100"
+                          className="flex w-full items-center gap-2 rounded-sm border-0 bg-transparent p-2 text-left text-xs font-semibold text-slate-800 hover:bg-slate-100"
                           onClick={() => {
                             saveMutation.reset();
                             setEditingEquipment(item);
@@ -312,7 +312,7 @@ export default function Equipment() {
                         </button>
 
                         <button
-                          className="flex w-full items-center gap-2 rounded-md border-0 bg-transparent p-2 text-left text-xs font-semibold text-red-700 hover:bg-red-50"
+                          className="flex w-full items-center gap-2 rounded-sm border-0 bg-transparent p-2 text-left text-xs font-semibold text-red-700 hover:bg-red-50"
                           onClick={() => {
                             deleteMutation.reset();
                             setDeleting(item);
@@ -357,14 +357,14 @@ export default function Equipment() {
                   </div>
 
                   {loanInfo && (
-                    <div className="my-2 truncate rounded-md bg-amber-50 p-2 text-xs text-amber-800">
+                    <div className="my-2 truncate rounded-sm bg-amber-50 p-2 text-xs text-amber-800">
                       With {loanInfo}
                     </div>
                   )}
 
                   <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
                     <button
-                      className="inline-flex min-h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
+                      className="inline-flex min-h-10 items-center justify-center rounded-sm border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
                       onClick={() => {
                         saveMutation.reset();
                         setEditingEquipment(item);
@@ -375,7 +375,7 @@ export default function Equipment() {
                     </button>
 
                     <button
-                      className="inline-flex min-h-9 items-center justify-center rounded-lg border border-campus-600 bg-campus-600 px-3 text-xs font-bold text-white hover:bg-campus-700"
+                      className="inline-flex min-h-9 items-center justify-center rounded-sm border border-campus-600 bg-campus-600 px-3 text-xs font-bold text-white hover:bg-campus-700"
                       disabled={item.status !== "available"}
                       onClick={() =>
                         navigate(`/checkouts?new=1&equipmentId=${item.id}`)
@@ -395,7 +395,7 @@ export default function Equipment() {
           message="Try changing your search or filters."
           action={
             <button
-              className="inline-flex min-h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
+              className="inline-flex min-h-10 items-center justify-center rounded-sm border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
               onClick={() => dispatch(clearEquipmentFilters())}
             >
               Clear filters
@@ -442,7 +442,7 @@ export default function Equipment() {
 
       {deleteMutation.error && deleting && (
         <div
-          className="fixed bottom-8 left-1/2 z-alert -translate-x-1/2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700 shadow-lg"
+          className="fixed bottom-8 left-1/2 z-alert -translate-x-1/2 rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700 shadow-lg"
           role="alert"
         >
           {deleteMutation.error.message}

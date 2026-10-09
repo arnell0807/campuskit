@@ -38,7 +38,7 @@ export default function StudentForm({
           className="col-span-2"
         >
           <input
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             {...register("name", {
               required: "Student name is required",
             })}
@@ -49,7 +49,7 @@ export default function StudentForm({
 
         <FormField label="Student ID" error={errors.studentId?.message}>
           <input
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             {...register("studentId", {
               required: "Student ID is required.",
               pattern: {
@@ -63,7 +63,7 @@ export default function StudentForm({
 
         <FormField label="Email address" error={errors.email?.message}>
           <input
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             type="email"
             {...register("email", {
               required: "Email is required",
@@ -78,7 +78,7 @@ export default function StudentForm({
 
         <FormField label="Department" error={errors.department?.message}>
           <input
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             {...register("department", {
               required: "Department is required",
             })}
@@ -88,7 +88,7 @@ export default function StudentForm({
 
         <FormField label="Year of study" error={errors.year?.message}>
           <select
-            className="min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
+            className="min-h-10 w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-xs outline-none focus:border-campus-500 focus:ring-2 focus:ring-campus-100"
             {...register("year", {
               required: "Select a year",
             })}
@@ -104,7 +104,7 @@ export default function StudentForm({
       </div>
 
       {serverError && (
-        <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+        <div className="mt-4 rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
           {serverError}
         </div>
       )}
@@ -112,7 +112,7 @@ export default function StudentForm({
       <div className="mt-6 flex justify-end gap-2 border-t border-slate-200 pt-4">
         <button
           type="button"
-          className="inline-flex min-h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
+          className="inline-flex min-h-10 items-center justify-center rounded-sm border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50"
           onClick={onCancel}
         >
           Cancel
@@ -120,7 +120,7 @@ export default function StudentForm({
 
         <button
           type="submit"
-          className="inline-flex min-h-10 items-center justify-center rounded-lg border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
+          className="inline-flex min-h-10 items-center justify-center rounded-sm border border-campus-600 bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
           disabled={pending}
         >
           {pending ? "Saving..." : student ? "Save changes" : "Add student"}
