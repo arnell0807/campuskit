@@ -1,11 +1,9 @@
 name: Keep Supabase alive
 
-# Supabase pauses free-plan projects after 7 days without activity.
-# Read-only pings weren't enough to count as activity, so this inserts a row
-# into the keep_alive table (see supabase/schema.sql) twice a week.
+
 on:
   schedule:
-    - cron: "0 */4 * * *
+    - cron: "0 */4 * * *"        
   workflow_dispatch:
 
 jobs:
