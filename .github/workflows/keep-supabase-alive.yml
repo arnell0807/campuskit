@@ -5,7 +5,7 @@ name: Keep Supabase alive
 # into the keep_alive table (see supabase/schema.sql) twice a week.
 on:
   schedule:
-    - cron: "0 */4 * * *"
+    - cron: "0 */4 * * *
   workflow_dispatch:
 
 jobs:
