@@ -51,3 +51,31 @@ create table if not exists keep_alive (
 alter table keep_alive enable row level security;
 
 create policy "anon insert pings" on keep_alive for insert to anon with check (true);
+
+-- Keeps the demo loans looking current: once a day, if the newest checkout is
+-- older than yesterday, every date moves forward by the same amount.
+-- Runs with pg_cron.
+create extension if not exists pg_cron;
+
+create or replace function public.shift_demo_checkouts()
+returns void
+language plpgsql
+set search_path = public
+as $$
+declare
+  shift integer;
+begin
+  select (current_date - 1) - max(checkout_date) into shift from public.checkouts;
+  if shift is null or shift <= 0 then
+    return;
+  end if;
+  update public.checkouts
+  set checkout_date = checkout_date + shift,
+      due_date = due_date + shift,
+      returned_date = returned_date + shift;
+end;
+$$;
+
+revoke execute on function public.shift_demo_checkouts() from public, anon, authenticated;
+
+select cron.schedule('shift-demo-checkouts', '5 0 * * *', 'select public.shift_demo_checkouts()');
