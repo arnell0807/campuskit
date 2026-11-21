@@ -228,7 +228,7 @@ export default function Checkouts() {
                 <article
                   className={`grid min-h-20 grid-cols-[auto_minmax(150px,1.2fr)_minmax(170px,.9fr)_minmax(120px,.7fr)_auto_auto] items-center gap-4 border-b border-slate-100 px-5 py-3 last:border-0 ${
                     overdue
-                      ? "border-l-[3px] border-l-orange-600 bg-linear-to-r from-orange-50 to-white"
+                      ? "bg-orange-50/60"
                       : ""
                   }`}
                   key={checkout.id}

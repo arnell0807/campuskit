@@ -21,10 +21,10 @@ const navItems = [
 ];
 
 const pageTitles: Record<string, [string, string]> = {
-  "/": ["Dashboard", "A clear view of your equipment library."],
-  "/equipment": ["Equipment", "Manage every item available across campus."],
-  "/students": ["Students", "Manage registered student borrowers."],
-  "/checkouts": ["Checkouts", "Lend, return, and review equipment activity."],
+  "/": ["Dashboard", "Today's equipment and loans."],
+  "/equipment": ["Equipment", "All equipment across campus."],
+  "/students": ["Students", "Students registered to borrow equipment."],
+  "/checkouts": ["Checkouts", "Current loans and returns."],
 };
 
 export default function Layout() {
@@ -59,9 +59,6 @@ export default function Layout() {
         </div>
 
         <nav className="pt-6" aria-label="Main navigation">
-          <span className="mb-3 block px-3 text-xs font-bold uppercase tracking-widest text-slate-500">
-            Workspace
-          </span>
           {navItems.map(({ path, label, icon: Icon }) => (
             <NavLink
               key={path}

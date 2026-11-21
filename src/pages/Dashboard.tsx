@@ -2,12 +2,9 @@ import { useNavigate } from "react-router-dom";
 import {
   AlertTriangle,
   ArrowRight,
-  Boxes,
   CheckCircle2,
-  Clock3,
   Plus,
   RotateCcw,
-  Wrench,
 } from "lucide-react";
 import { useEquipment } from "../hooks/useEquipment";
 import { useStudents } from "../hooks/useStudents";
@@ -69,10 +66,6 @@ export default function Dashboard() {
     .sort((a, b) => b.checkoutDate.localeCompare(a.checkoutDate))
     .slice(0, 5);
 
-  const weekday = new Intl.DateTimeFormat("en", {
-    weekday: "long",
-  }).format(new Date());
-
   const openOverdue = () => {
     dispatch(setCheckoutView("active"));
     navigate("/checkouts");
@@ -80,25 +73,17 @@ export default function Dashboard() {
 
   return (
     <div>
-      <section className="relative mb-6 flex items-center justify-between gap-6 overflow-hidden rounded-md bg-linear-to-r from-campus-900 via-campus-700 to-campus-500 px-7 py-6 text-white shadow-lg">
-        <div>
-          <span className="mb-2 block text-xs font-extrabold uppercase tracking-widest text-campus-200">
-            {weekday} overview
-          </span>
-          <h2 className="mb-1 text-xl font-extrabold">
-            Here's what's happening today.
-          </h2>
-          <p className="m-0 text-sm text-campus-100">
-            {overdue.length
-              ? `${overdue.length} overdue ${
-                  overdue.length === 1 ? "item needs" : "items need"
-                } your attention today.`
-              : "Everything is on track today."}
-          </p>
-        </div>
+      <section className="mb-6 flex items-center justify-between gap-6 rounded-md border border-slate-200 bg-white px-6 py-4">
+        <p className="m-0 text-sm text-slate-700">
+          {overdue.length
+            ? `${overdue.length} overdue ${
+                overdue.length === 1 ? "item needs" : "items need"
+              } attention.`
+            : "Nothing is overdue."}
+        </p>
 
         <button
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-sm border border-campus-200 bg-campus-200 px-4 text-xs font-bold text-campus-900 hover:bg-white"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-sm bg-campus-600 px-4 text-xs font-bold text-white hover:bg-campus-700"
           onClick={() => navigate("/checkouts?new=1")}
         >
           <Plus size={17} />
@@ -110,10 +95,7 @@ export default function Dashboard() {
         className="mb-5 grid grid-cols-4 gap-4"
         aria-label="Equipment overview"
       >
-        <article className="flex min-h-32 items-start gap-4 rounded border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid size-10 shrink-0 place-items-center rounded bg-campus-100 text-campus-700">
-            <Boxes size={20} />
-          </div>
+        <article className="min-h-28 rounded border border-slate-200 bg-white p-5 shadow-sm">
 
           <div>
             <span className="mb-1 block text-xs font-semibold text-slate-500">
@@ -130,10 +112,7 @@ export default function Dashboard() {
           </div>
         </article>
 
-        <article className="flex min-h-32 items-start gap-4 rounded border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid size-10 shrink-0 place-items-center rounded bg-campus-100 text-campus-700">
-            <CheckCircle2 size={20} />
-          </div>
+        <article className="min-h-28 rounded border border-slate-200 bg-white p-5 shadow-sm">
 
           <div>
             <span className="mb-1 block text-xs font-semibold text-slate-500">
@@ -153,10 +132,7 @@ export default function Dashboard() {
           </div>
         </article>
 
-        <article className="flex min-h-32 items-start gap-4 rounded border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid size-10 shrink-0 place-items-center rounded bg-amber-100 text-amber-700">
-            <Clock3 size={20} />
-          </div>
+        <article className="min-h-28 rounded border border-slate-200 bg-white p-5 shadow-sm">
 
           <div>
             <span className="mb-1 block text-xs font-semibold text-slate-500">
@@ -173,10 +149,7 @@ export default function Dashboard() {
           </div>
         </article>
 
-        <article className="flex min-h-32 items-start gap-4 rounded border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid size-10 shrink-0 place-items-center rounded bg-red-100 text-red-700">
-            <Wrench size={20} />
-          </div>
+        <article className="min-h-28 rounded border border-slate-200 bg-white p-5 shadow-sm">
 
           <div>
             <span className="mb-1 block text-xs font-semibold text-slate-500">
